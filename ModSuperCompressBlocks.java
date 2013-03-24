@@ -1,4 +1,4 @@
-package nurseangel.SuperCompressBlock;
+package mods.nurseangel.supercompressblock;
 
 import java.util.logging.Level;
 
@@ -21,16 +21,20 @@ public class ModSuperCompressBlocks {
 	public static boolean isTest = false;
 
 	// BlockID
-	public static int CompressedStoneBlockID, CompressedDirtBlockID, CompressedCobblestoneBlockID, CompressedIronBlockID, CompressedGoldBlockID, CompressedLapisBlockID, CompressedDiamondBlockID,
-			CompressedSandBlockID, CompressedGravelBlockID, CompressedSandStoneBlockID, CompressedObsidanBlockID, CompressedSnowBlockID, CompressedSoulsandBlockID, CompressedGlowStoneBlockID,
-			CompressedEndStoneBlockID, CompressedNetherrackBlockID, CompressedEmeraldBlockID, CompressedWhiteWoolBlockID, CompressedOrangeWoolBlockID, CompressedMagentaWoolBlockID,
-			CompressedLightBlueWoolBlockID, CompressedYellowWoolBlockID, CompressedLightGreenWoolBlockID, CompressedPinkWoolBlockID, CompressedGrayWoolBlockID, CompressedLightGrayWoolBlockID,
-			CompressedCyanWoolBlockID, CompressedPurpleWoolBlockID, CompressedBlueWoolBlockID, CompressedBrownWoolBlockID, CompressedGreenWoolBlockID, CompressedRedWoolBlockID,
-			CompressedBlackWoolBlockID, CompressedOakWoodBlockID, CompressedSpurceWoodBlockID, CompressedBirchWoodBlockID, CompressedJungleWoodBlockID, CompressedOakPlanksBlockID,
-			CompressedSpurcePlanksBlockID, CompressedBirchPlanksBlockID, CompressedJunglePlanksBlockID, CompressedCompressedStoneBlockID, CompressedBrickBlockID, CompressedBookshelfBlockID,
-			CompressedMossyCobblestoneBlockID, CompressedStoneBrickBlockID, CompressedClayBlockID, CompressedMossyStoneBrickBlockID, CompressedCrackedStoneBrickBlockID;
+	public static int CompressedStoneBlockID, CompressedDirtBlockID, CompressedCobblestoneBlockID, CompressedIronBlockID, CompressedGoldBlockID,
+			CompressedLapisBlockID, CompressedDiamondBlockID, CompressedSandBlockID, CompressedGravelBlockID, CompressedSandStoneBlockID,
+			CompressedObsidanBlockID, CompressedSnowBlockID, CompressedSoulsandBlockID, CompressedGlowStoneBlockID, CompressedEndStoneBlockID,
+			CompressedNetherrackBlockID, CompressedEmeraldBlockID, CompressedWhiteWoolBlockID, CompressedOrangeWoolBlockID, CompressedMagentaWoolBlockID,
+			CompressedLightBlueWoolBlockID, CompressedYellowWoolBlockID, CompressedLightGreenWoolBlockID, CompressedPinkWoolBlockID, CompressedGrayWoolBlockID,
+			CompressedLightGrayWoolBlockID, CompressedCyanWoolBlockID, CompressedPurpleWoolBlockID, CompressedBlueWoolBlockID, CompressedBrownWoolBlockID,
+			CompressedGreenWoolBlockID, CompressedRedWoolBlockID, CompressedBlackWoolBlockID, CompressedOakWoodBlockID, CompressedSpurceWoodBlockID,
+			CompressedBirchWoodBlockID, CompressedJungleWoodBlockID, CompressedOakPlanksBlockID, CompressedSpurcePlanksBlockID, CompressedBirchPlanksBlockID,
+			CompressedJunglePlanksBlockID, CompressedCompressedStoneBlockID, CompressedBrickBlockID, CompressedBookshelfBlockID,
+			CompressedMossyCobblestoneBlockID, CompressedStoneBrickBlockID, CompressedClayBlockID, CompressedMossyStoneBrickBlockID,
+			CompressedCrackedStoneBrickBlockID, CompressedRedstoneBlockID, CompressedNetherQuartzBlockID, CompressedChiseledNetherQuartzBlockID,
+			CompressedPillarNetherQuartzBlockID;
 
-	public static BlockSuperCompressBlock[] blockCompressedBlock = new BlockSuperCompressBlock[50];
+	public static BlockSuperCompressBlock[] blockCompressedBlock = new BlockSuperCompressBlock[53];
 	public int loopCount = 0;
 
 	public static final CreativeTabs creativeTab = new CreativeTabSuperCompressBlock(Reference.MOD_NAME);
@@ -91,8 +95,12 @@ public class ModSuperCompressBlocks {
 			CompressedClayBlockID = cfg.getBlock("Compressed Clay BlockID", BlockIdDefault++).getInt();
 			CompressedMossyStoneBrickBlockID = cfg.getBlock("Compressed Mossy Stone Brick BlockID", BlockIdDefault++).getInt();
 			CompressedCrackedStoneBrickBlockID = cfg.getBlock("Compressed Cracked Stone Brick BlockID", BlockIdDefault++).getInt();
-
 			CompressedCompressedStoneBlockID = cfg.getBlock("Compressed Compressed Stone BlockID", BlockIdDefault++).getInt();
+
+			CompressedRedstoneBlockID = cfg.getBlock("Compressed RedStone BlockID", BlockIdDefault++).getInt();
+			CompressedNetherQuartzBlockID = cfg.getBlock("Compressed Nether Quartz BlockID", BlockIdDefault++).getInt();
+			CompressedChiseledNetherQuartzBlockID = cfg.getBlock("Compressed Chiseled Nether Quartz BlockID", BlockIdDefault++).getInt();
+			CompressedPillarNetherQuartzBlockID = cfg.getBlock("Compressed Piller Nether Quartz BlockID", BlockIdDefault++).getInt();
 
 		} catch (Exception e) {
 			FMLLog.log(Level.SEVERE, e, Reference.MOD_NAME + " loadding configuration failure");
@@ -260,22 +268,39 @@ public class ModSuperCompressBlocks {
 			this.addCompressedBlock(CompressedCrackedStoneBrickBlockID, Block.stoneBrick, "Cracked Stone Brick", "ひび割れた石レンガブロック", 2);
 		}
 
+		if (CompressedRedstoneBlockID > 1) {
+			this.addCompressedBlock(CompressedRedstoneBlockID, Block.blockRedstone, "Redstone", "レッドストーンブロック");
+		}
+		if (CompressedNetherQuartzBlockID > 1) {
+			this.addCompressedBlock(CompressedNetherQuartzBlockID, Block.blockNetherQuartz, "Nether Quartz", "ネザー水晶ブロック", 0);
+		}
+		if (CompressedChiseledNetherQuartzBlockID > 1) {
+			this.addCompressedBlock(CompressedChiseledNetherQuartzBlockID, Block.blockNetherQuartz, "Chiseled Nether Quartz", "模様入りネザー水晶ブロック", 1);
+		}
+		if (CompressedPillarNetherQuartzBlockID > 1) {
+			this.addCompressedBlock(CompressedPillarNetherQuartzBlockID, Block.blockNetherQuartz, "Pillar Nether Quartz", "柱状ネザー水晶ブロック", 2);
+		}
+
 	}
 
-	/*
+	/**
 	 * 圧縮ブロックを追加
 	 *
 	 * @param int BlockID
 	 *
-	 * @param Block 素材ブロック
+	 * @param Block
+	 *            素材ブロック
 	 *
-	 * @param String 英語名
+	 * @param String
+	 *            英語名
 	 *
-	 * @param String 日本語名
+	 * @param String
+	 *            日本語名
 	 *
 	 * @param int メタデータ
 	 *
-	 * @param bool trueなら光る
+	 * @param bool
+	 *            trueなら光る
 	 */
 	private void addCompressedBlock(int CompressedBlockID, Block materialBlock, String BlockNameEn, String BlockNameJp) {
 		this.addCompressedBlock(CompressedBlockID, materialBlock, BlockNameEn, BlockNameJp, 0, false);
@@ -289,7 +314,7 @@ public class ModSuperCompressBlocks {
 
 		// ブロック
 		blockCompressedBlock[loopCount] = new BlockSuperCompressBlock(CompressedBlockID, materialBlock, metadata);
-		blockCompressedBlock[loopCount].setBlockName("CompressedBlock" + Integer.toString(CompressedBlockID));
+		blockCompressedBlock[loopCount].setUnlocalizedName("CompressedBlock" + Integer.toString(CompressedBlockID));
 		// クリエイティブモードに追加
 		blockCompressedBlock[loopCount].setCreativeTab(creativeTab);
 
@@ -305,7 +330,8 @@ public class ModSuperCompressBlocks {
 		// 0はレシピに元素材を使用
 		ModLoader.addName(new ItemStack(blockCompressedBlock[loopCount], 1, 0), (Reference.blockNamePrefixEn[0] + BlockNameEn));
 		ModLoader.addName(new ItemStack(blockCompressedBlock[loopCount], 1, 0), "ja_JP", (Reference.blockNamePrefixJp[0] + BlockNameJp));
-		ModLoader.addRecipe(new ItemStack(blockCompressedBlock[loopCount], 1, 0), new Object[] { "XXX", "XXX", "XX ", 'X', new ItemStack(materialBlock, 1, metadata) });
+		ModLoader.addRecipe(new ItemStack(blockCompressedBlock[loopCount], 1, 0), new Object[] { "XXX", "XXX", "XX ", 'X',
+				new ItemStack(materialBlock, 1, metadata) });
 		ModLoader.addShapelessRecipe(new ItemStack(materialBlock, 8, metadata), new Object[] { new ItemStack(blockCompressedBlock[loopCount], 1) });
 
 		// 1～15はひとつ手前のブロック*8
@@ -314,21 +340,27 @@ public class ModSuperCompressBlocks {
 			if (i == 14 || i == 15) {
 				ModLoader.addName(new ItemStack(blockCompressedBlock[loopCount], 1, i), Reference.blockNamePrefixEn[i]);
 				ModLoader.addName(new ItemStack(blockCompressedBlock[loopCount], 1, i), "ja_JP", Reference.blockNamePrefixJp[i]);
-				((ItemSuperCompressBlock) Item.itemsList[CompressedBlockID]).setBlockNameEn(BlockNameEn).setBlockNameJp(BlockNameJp).setMaterialBlockMetaData(metadata);
+				((ItemSuperCompressBlock) Item.itemsList[CompressedBlockID]).setBlockNameEn(BlockNameEn).setBlockNameJp(BlockNameJp);
 			} else {
 				ModLoader.addName(new ItemStack(blockCompressedBlock[loopCount], 1, i), (Reference.blockNamePrefixEn[i] + BlockNameEn));
 				ModLoader.addName(new ItemStack(blockCompressedBlock[loopCount], 1, i), "ja_JP", (Reference.blockNamePrefixJp[i] + BlockNameJp));
 			}
-			ModLoader.addRecipe(new ItemStack(blockCompressedBlock[loopCount], 1, i), new Object[] { "XXX", "XXX", "XX ", 'X', new ItemStack(blockCompressedBlock[loopCount], 1, i - 1) });
-			ModLoader.addRecipe(new ItemStack(blockCompressedBlock[loopCount], 8, i - 1), new Object[] { "X", 'X', new ItemStack(blockCompressedBlock[loopCount], 1, i) }); // 還元
+			ModLoader.addRecipe(new ItemStack(blockCompressedBlock[loopCount], 1, i), new Object[] { "XXX", "XXX", "XX ", 'X',
+					new ItemStack(blockCompressedBlock[loopCount], 1, i - 1) });
+			ModLoader.addRecipe(new ItemStack(blockCompressedBlock[loopCount], 8, i - 1), new Object[] { "X", 'X',
+					new ItemStack(blockCompressedBlock[loopCount], 1, i) }); // 還元
 		}
 
 		// テスト
 		if (isTest) {
-			ModLoader.addRecipe(new ItemStack(blockCompressedBlock[loopCount], 64, 3), new Object[] { "X  ", "X  ", 'X', new ItemStack(blockCompressedBlock[loopCount], 1, 0) });
-			ModLoader.addRecipe(new ItemStack(blockCompressedBlock[loopCount], 64, 6), new Object[] { "X  ", " X ", 'X', new ItemStack(blockCompressedBlock[loopCount], 1, 0) });
-			ModLoader.addRecipe(new ItemStack(blockCompressedBlock[loopCount], 64, 9), new Object[] { " X ", "X  ", 'X', new ItemStack(blockCompressedBlock[loopCount], 1, 0) });
-			ModLoader.addRecipe(new ItemStack(blockCompressedBlock[loopCount], 64, 12), new Object[] { " X ", " X ", 'X', new ItemStack(blockCompressedBlock[loopCount], 1, 0) });
+			ModLoader.addRecipe(new ItemStack(blockCompressedBlock[loopCount], 64, 3), new Object[] { "X  ", "X  ", 'X',
+					new ItemStack(blockCompressedBlock[loopCount], 1, 0) });
+			ModLoader.addRecipe(new ItemStack(blockCompressedBlock[loopCount], 64, 6), new Object[] { "X  ", " X ", 'X',
+					new ItemStack(blockCompressedBlock[loopCount], 1, 0) });
+			ModLoader.addRecipe(new ItemStack(blockCompressedBlock[loopCount], 64, 9), new Object[] { " X ", "X  ", 'X',
+					new ItemStack(blockCompressedBlock[loopCount], 1, 0) });
+			ModLoader.addRecipe(new ItemStack(blockCompressedBlock[loopCount], 64, 12), new Object[] { " X ", " X ", 'X',
+					new ItemStack(blockCompressedBlock[loopCount], 1, 0) });
 		}
 
 		loopCount++;

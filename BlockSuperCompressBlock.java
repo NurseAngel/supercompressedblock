@@ -1,13 +1,20 @@
-package nurseangel.SuperCompressBlock;
+package mods.nurseangel.supercompressblock;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
 import net.minecraft.block.Block;
+import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.ItemStack;
-import net.minecraft.src.ModLoader;
+import net.minecraft.util.Icon;
 import net.minecraft.world.IBlockAccess;
+import net.minecraft.world.World;
+import cpw.mods.fml.client.FMLClientHandler;
+import cpw.mods.fml.common.FMLCommonHandler;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
 /*
  * 圧縮ブロッククラス
@@ -18,7 +25,7 @@ public class BlockSuperCompressBlock extends Block {
 	// 素材になるブロック
 	public Block materialBlock;
 	// 素材ブロックのメタデータ (このブロックのではない)
-	private int metadata;
+	private int materialMetadata;
 
 	/**
 	 * コンストラクタ
@@ -32,14 +39,13 @@ public class BlockSuperCompressBlock extends Block {
 		this(blockID, materialBlock, 0);
 	}
 
-	public BlockSuperCompressBlock(int blockID, Block materialBlock, int metadata) {
-		// 素材やテクスチャは素材ブロックを使用
-		super(blockID, materialBlock.blockIndexInTexture, materialBlock.blockMaterial);
-		// super(blockID, materialBlock.blockMaterial);
-		this.setHardness(materialBlock.getBlockHardness(ModLoader.getMinecraftInstance().theWorld, 0, 0, 0));
+	public BlockSuperCompressBlock(int blockID, Block materialBlock, int materialMetadata) {
+		super(blockID, materialBlock.blockMaterial);
+
+		this.setHardness(materialBlock.getBlockHardness(null, 0, 0, 0));
 
 		this.materialBlock = materialBlock;
-		this.metadata = metadata;
+		this.materialMetadata = materialMetadata;
 
 	}
 
@@ -48,14 +54,10 @@ public class BlockSuperCompressBlock extends Block {
 	 *
 	 * @param メタデータ
 	 * @param Random
-	 * @param ?
+	 * @param fortune
 	 */
 	@Override
 	public int idDropped(int par1, Random par2Random, int par3) {
-		if (ModSuperCompressBlocks.isTest) {
-			ModLoader.getMinecraftInstance().thePlayer.addChatMessage("idDropped par1:" + Integer.toString(par1) + "par3:" + Integer.toString(par3));
-		}
-
 		// メタデータが0以外であれば自分
 		if (par1 > 0) {
 			return blockID;
@@ -73,12 +75,13 @@ public class BlockSuperCompressBlock extends Block {
 	 */
 	@Override
 	public int damageDropped(int par1) {
+
 		// 1以上であれば-1した値
 		if (par1 > 0) {
 			return par1 - 1;
 		}
 		// 0であれば、素材ブロックのメタデータ
-		return metadata;
+		return materialMetadata;
 	}
 
 	/**
@@ -103,9 +106,6 @@ public class BlockSuperCompressBlock extends Block {
 	@Override
 	public int getRenderColor(int metadata) {
 		int retRenderColor = 0xffffff - (0x111111 * metadata);
-		if (ModSuperCompressBlocks.isTest) {
-			ModLoader.getMinecraftInstance().thePlayer.addChatMessage("getRenderColor par1:" + Integer.toString(metadata) + "retRenderColor:" + Integer.toString(retRenderColor));
-		}
 		return retRenderColor;
 	}
 
@@ -125,16 +125,29 @@ public class BlockSuperCompressBlock extends Block {
 	 * 使用するテクスチャを返す。素材ブロックにメタデータがある場合用
 	 *
 	 * @param int 方向
-	 * @param int メタデータ このブロックのメタデータなので、使用テクスチャにはこれではなく元ブロックのメタデータを使う
-	 * @return 咆哮に対応したテクスチャ番号
+	 * @param int メタデータ
+	 * @return Icon 該当のテクスチャ
 	 */
 	@Override
-	public int getBlockTextureFromSideAndMetadata(int par1, int par2) {
-		return this.materialBlock.getBlockTextureFromSideAndMetadata(par1, this.metadata);
+	@SideOnly(Side.CLIENT)
+	public Icon getBlockTextureFromSideAndMetadata(int par1, int par2) {
+		// 引数のはこのブロックのメタデータなので、使用するテクスチャはこれではなく元ブロックのメタデータを使う
+		return this.materialBlock.getBlockTextureFromSideAndMetadata(par1, this.materialMetadata);
 	}
 
 	/**
-	 * メタデータがある場合にクリエイティブタブに追加
+	 * 使用するアイコンをセット
+	 *
+	 * @param iconRegister
+	 */
+	@Override
+	@SideOnly(Side.CLIENT)
+	public void registerIcons(IconRegister iconRegister) {
+		// 上書きしないとエラーが出る
+	}
+
+	/**
+	 * メクリエイティブタブに追加
 	 *
 	 * @param int BlockID
 	 * @param CreativeTabs
@@ -142,10 +155,27 @@ public class BlockSuperCompressBlock extends Block {
 	 * @return List
 	 */
 	@Override
+	@SideOnly(Side.CLIENT)
 	public void getSubBlocks(int par1, CreativeTabs par2CreativeTabs, List par3List) {
 		for (int var4 = 0; var4 < 16; ++var4) {
 			par3List.add(new ItemStack(par1, 1, var4));
 		}
 	}
+
+	// テキスト
+	private void showMessage(String message) {
+		if (ModSuperCompressBlocks.isTest) {
+			try {
+				Side side = FMLCommonHandler.instance().getSide();
+
+				if (side.isClient()) {
+					FMLClientHandler.instance().getClient().thePlayer.addChatMessage(message);
+				}
+			} catch (Exception e) {
+			}
+		}
+	}
+
+
 
 }

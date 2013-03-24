@@ -1,4 +1,4 @@
-package nurseangel.SuperCompressBlock.proxy;
+package mods.nurseangel.supercompressblock.proxy;
 
 public class CommonProxy {
 

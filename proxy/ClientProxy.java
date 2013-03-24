@@ -1,6 +1,5 @@
-package nurseangel.SuperCompressBlock.proxy;
+package mods.nurseangel.supercompressblock.proxy;
 
-import nurseangel.EnhancedShears.Proxy.CommonProxy;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
