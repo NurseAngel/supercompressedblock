@@ -1,4 +1,4 @@
-package mods.nurseangel.supercompressblock;
+package mods.nurseangel.supercompressedblock;
 
 import net.minecraft.creativetab.CreativeTabs;
 import cpw.mods.fml.relauncher.Side;

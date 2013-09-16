@@ -1,11 +1,13 @@
-package mods.nurseangel.supercompressblock;
+package mods.nurseangel.supercompressedblock;
 
 import java.util.List;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.StringTranslate;
+import cpw.mods.fml.client.FMLClientHandler;
+import cpw.mods.fml.common.FMLCommonHandler;
+import cpw.mods.fml.relauncher.Side;
 
 public class ItemSuperCompressBlock extends ItemBlock {
 
@@ -19,6 +21,21 @@ public class ItemSuperCompressBlock extends ItemBlock {
 		setMaxStackSize(64);
 		setMaxDamage(0);
 		setHasSubtypes(true);
+
+		/**
+		 * 言語<br />
+		 * ここに置くとゲーム中に言語変更したときに追随しないんだけどまあいいや
+		 *
+		 */
+
+		Side hoge = FMLCommonHandler.instance().getSide();
+		if(hoge.equals(Side.CLIENT))
+		try {
+			currentLanguage = FMLClientHandler.instance().getClient().gameSettings.language;
+		} catch (Exception e) {
+
+		}
+
 	}
 
 	// 補足事項用
@@ -55,6 +72,8 @@ public class ItemSuperCompressBlock extends ItemBlock {
 		return (new StringBuilder()).append(getUnlocalizedName()).append(i).toString();
 	}
 
+	private String currentLanguage = "";
+
 	/**
 	 * 名前に追加する補足事項があればlistに追加する
 	 *
@@ -74,7 +93,6 @@ public class ItemSuperCompressBlock extends ItemBlock {
 			return;
 		}
 
-		String currentLanguage = StringTranslate.getInstance().getCurrentLanguage();
 		/*
 		 * TODO BlockNameJpとかReferenceに持って行ければ
 		 */

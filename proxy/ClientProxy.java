@@ -1,4 +1,4 @@
-package mods.nurseangel.supercompressblock.proxy;
+package mods.nurseangel.supercompressedblock.proxy;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;

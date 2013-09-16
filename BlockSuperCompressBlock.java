@@ -1,6 +1,5 @@
-package mods.nurseangel.supercompressblock;
+package mods.nurseangel.supercompressedblock;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
@@ -10,9 +9,6 @@ import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Icon;
 import net.minecraft.world.IBlockAccess;
-import net.minecraft.world.World;
-import cpw.mods.fml.client.FMLClientHandler;
-import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
@@ -122,32 +118,18 @@ public class BlockSuperCompressBlock extends Block {
 	}
 
 	/**
-	 * 使用するテクスチャを返す。素材ブロックにメタデータがある場合用
+	 * 使用するテクスチャを返す。素材ブロックにメタデータがある場合用。 設置時しか反応しない?
 	 *
 	 * @param int 方向
 	 * @param int メタデータ
 	 * @return Icon 該当のテクスチャ
 	 */
-	@Override
-	@SideOnly(Side.CLIENT)
-	public Icon getBlockTextureFromSideAndMetadata(int par1, int par2) {
-		// 引数のはこのブロックのメタデータなので、使用するテクスチャはこれではなく元ブロックのメタデータを使う
-		return this.materialBlock.getBlockTextureFromSideAndMetadata(par1, this.materialMetadata);
+	public Icon getIcon(int par1, int par2) {
+		return this.materialBlock.getIcon(par1, this.materialMetadata);
 	}
 
 	/**
-	 * 使用するアイコンをセット
-	 *
-	 * @param iconRegister
-	 */
-	@Override
-	@SideOnly(Side.CLIENT)
-	public void registerIcons(IconRegister iconRegister) {
-		// 上書きしないとエラーが出る
-	}
-
-	/**
-	 * メクリエイティブタブに追加
+	 * クリエイティブタブに追加
 	 *
 	 * @param int BlockID
 	 * @param CreativeTabs
@@ -162,20 +144,15 @@ public class BlockSuperCompressBlock extends Block {
 		}
 	}
 
-	// テキスト
-	private void showMessage(String message) {
-		if (ModSuperCompressBlocks.isTest) {
-			try {
-				Side side = FMLCommonHandler.instance().getSide();
-
-				if (side.isClient()) {
-					FMLClientHandler.instance().getClient().thePlayer.addChatMessage(message);
-				}
-			} catch (Exception e) {
-			}
-		}
+	/**
+	 * 使用するアイコンをセット
+	 *
+	 * @param iconRegister
+	 */
+	@Override
+	@SideOnly(Side.CLIENT)
+	public void registerIcons(IconRegister iconRegister) {
+		// 使わないときは上書きしないとエラーが出る
 	}
-
-
 
 }

@@ -1,6 +1,4 @@
-package mods.nurseangel.supercompressblock;
-
-import java.util.logging.Level;
+package mods.nurseangel.supercompressedblock;
 
 import net.minecraft.block.Block;
 import net.minecraft.creativetab.CreativeTabs;
@@ -8,7 +6,6 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.src.ModLoader;
 import net.minecraftforge.common.Configuration;
-import cpw.mods.fml.common.FMLLog;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
@@ -20,265 +17,254 @@ public class ModSuperCompressBlocks {
 
 	public static boolean isTest = false;
 
-	// BlockID
-	public static int CompressedStoneBlockID, CompressedDirtBlockID, CompressedCobblestoneBlockID, CompressedIronBlockID, CompressedGoldBlockID,
-			CompressedLapisBlockID, CompressedDiamondBlockID, CompressedSandBlockID, CompressedGravelBlockID, CompressedSandStoneBlockID,
-			CompressedObsidanBlockID, CompressedSnowBlockID, CompressedSoulsandBlockID, CompressedGlowStoneBlockID, CompressedEndStoneBlockID,
-			CompressedNetherrackBlockID, CompressedEmeraldBlockID, CompressedWhiteWoolBlockID, CompressedOrangeWoolBlockID, CompressedMagentaWoolBlockID,
-			CompressedLightBlueWoolBlockID, CompressedYellowWoolBlockID, CompressedLightGreenWoolBlockID, CompressedPinkWoolBlockID, CompressedGrayWoolBlockID,
-			CompressedLightGrayWoolBlockID, CompressedCyanWoolBlockID, CompressedPurpleWoolBlockID, CompressedBlueWoolBlockID, CompressedBrownWoolBlockID,
-			CompressedGreenWoolBlockID, CompressedRedWoolBlockID, CompressedBlackWoolBlockID, CompressedOakWoodBlockID, CompressedSpurceWoodBlockID,
-			CompressedBirchWoodBlockID, CompressedJungleWoodBlockID, CompressedOakPlanksBlockID, CompressedSpurcePlanksBlockID, CompressedBirchPlanksBlockID,
-			CompressedJunglePlanksBlockID, CompressedCompressedStoneBlockID, CompressedBrickBlockID, CompressedBookshelfBlockID,
-			CompressedMossyCobblestoneBlockID, CompressedStoneBrickBlockID, CompressedClayBlockID, CompressedMossyStoneBrickBlockID,
-			CompressedCrackedStoneBrickBlockID, CompressedRedstoneBlockID, CompressedNetherQuartzBlockID, CompressedChiseledNetherQuartzBlockID,
-			CompressedPillarNetherQuartzBlockID;
-
-	public static BlockSuperCompressBlock[] blockCompressedBlock = new BlockSuperCompressBlock[53];
+	public static BlockSuperCompressBlock[] blockCompressedBlock = new BlockSuperCompressBlock[71];
 	public int loopCount = 0;
+
+	Config config;
 
 	public static final CreativeTabs creativeTab = new CreativeTabSuperCompressBlock(Reference.MOD_NAME);
 
 	// コンストラクタ的なもの
-	@Mod.PreInit
+	@Mod.EventHandler
 	public void myPreInitMethod(FMLPreInitializationEvent event) {
 		Configuration cfg = new Configuration(event.getSuggestedConfigurationFile());
-		int BlockIdDefault = 1188;
-
-		try {
-			cfg.load();
-			CompressedStoneBlockID = cfg.getBlock("Compressed Stone BlockID", BlockIdDefault++).getInt();
-			CompressedDirtBlockID = cfg.getBlock("Compressed Dirt BlockID", BlockIdDefault++).getInt();
-			CompressedCobblestoneBlockID = cfg.getBlock("Compressed Cobblestone BlockID", BlockIdDefault++).getInt();
-			CompressedIronBlockID = cfg.getBlock("Compressed Iron BlockID", BlockIdDefault++).getInt();
-			CompressedGoldBlockID = cfg.getBlock("Compressed Gold BlockID", BlockIdDefault++).getInt();
-			CompressedLapisBlockID = cfg.getBlock("Compressed Lapis BlockID", BlockIdDefault++).getInt();
-			CompressedDiamondBlockID = cfg.getBlock("Compressed Diamond BlockID", BlockIdDefault++).getInt();
-			CompressedSandBlockID = cfg.getBlock("Compressed Sand BlockID", BlockIdDefault++).getInt();
-			CompressedGravelBlockID = cfg.getBlock("Compressed Grabel BlockID", BlockIdDefault++).getInt();
-			CompressedSandStoneBlockID = cfg.getBlock("Compressed SandStone BlockID", BlockIdDefault++).getInt();
-			CompressedObsidanBlockID = cfg.getBlock("Compressed Obsidan BlockID", BlockIdDefault++).getInt();
-			CompressedSnowBlockID = cfg.getBlock("Compressed Snow BlockID", BlockIdDefault++).getInt();
-			CompressedSoulsandBlockID = cfg.getBlock("Compressed Soulsand BlockID", BlockIdDefault++).getInt();
-			CompressedGlowStoneBlockID = cfg.getBlock("Compressed GlowStone BlockID", BlockIdDefault++).getInt();
-			CompressedEndStoneBlockID = cfg.getBlock("Compressed EndStone BlockID", BlockIdDefault++).getInt();
-			CompressedNetherrackBlockID = cfg.getBlock("Compressed Netherrack BlockID", BlockIdDefault++).getInt();
-			CompressedEmeraldBlockID = cfg.getBlock("Compressed Emerald BlockID", BlockIdDefault++).getInt();
-			CompressedWhiteWoolBlockID = cfg.getBlock("Compressed WhiteWool BlockID", BlockIdDefault++).getInt();
-			CompressedOrangeWoolBlockID = cfg.getBlock("Compressed Orange Wool BlockID", BlockIdDefault++).getInt();
-			CompressedMagentaWoolBlockID = cfg.getBlock("Compressed Magenta Wool BlockID", BlockIdDefault++).getInt();
-			CompressedLightBlueWoolBlockID = cfg.getBlock("Compressed LightBlue Wool BlockID", BlockIdDefault++).getInt();
-			CompressedYellowWoolBlockID = cfg.getBlock("Compressed Yellow Wool BlockID", BlockIdDefault++).getInt();
-			CompressedLightGreenWoolBlockID = cfg.getBlock("Compressed LightGreen Wool BlockID", BlockIdDefault++).getInt();
-			CompressedPinkWoolBlockID = cfg.getBlock("Compressed Pink Wool BlockID", BlockIdDefault++).getInt();
-			CompressedGrayWoolBlockID = cfg.getBlock("Compressed Gray Wool BlockID", BlockIdDefault++).getInt();
-			CompressedLightGrayWoolBlockID = cfg.getBlock("Compressed LightGray Wool BlockID", BlockIdDefault++).getInt();
-			CompressedCyanWoolBlockID = cfg.getBlock("Compressed Cyan Wool BlockID", BlockIdDefault++).getInt();
-			CompressedPurpleWoolBlockID = cfg.getBlock("Compressed Purple Wool BlockID", BlockIdDefault++).getInt();
-			CompressedBlueWoolBlockID = cfg.getBlock("Compressed Blue Wool BlockID", BlockIdDefault++).getInt();
-			CompressedBrownWoolBlockID = cfg.getBlock("Compressed Brown Wool BlockID", BlockIdDefault++).getInt();
-			CompressedGreenWoolBlockID = cfg.getBlock("Compressed Green Wool BlockID", BlockIdDefault++).getInt();
-			CompressedRedWoolBlockID = cfg.getBlock("Compressed Red Wool BlockID", BlockIdDefault++).getInt();
-			CompressedBlackWoolBlockID = cfg.getBlock("Compressed Black Wool BlockID", BlockIdDefault++).getInt();
-			CompressedOakWoodBlockID = cfg.getBlock("Compressed Oak Wood BlockID", BlockIdDefault++).getInt();
-			CompressedSpurceWoodBlockID = cfg.getBlock("Compressed Spurce Wood BlockID", BlockIdDefault++).getInt();
-			CompressedBirchWoodBlockID = cfg.getBlock("Compressed Birch Wood BlockID", BlockIdDefault++).getInt();
-			CompressedJungleWoodBlockID = cfg.getBlock("Compressed Jungle Wood BlockID", BlockIdDefault++).getInt();
-			CompressedOakPlanksBlockID = cfg.getBlock("Compressed Oak Planks BlockID", BlockIdDefault++).getInt();
-			CompressedSpurcePlanksBlockID = cfg.getBlock("Compressed Spurce Planks BlockID", BlockIdDefault++).getInt();
-			CompressedBirchPlanksBlockID = cfg.getBlock("Compressed Birch Planks BlockID", BlockIdDefault++).getInt();
-			CompressedJunglePlanksBlockID = cfg.getBlock("Compressed Jungle Planks BlockID", BlockIdDefault++).getInt();
-			CompressedBrickBlockID = cfg.getBlock("Compressed Brick BlockID", BlockIdDefault++).getInt();
-			CompressedBookshelfBlockID = cfg.getBlock("Compressed Bookshelf BlockID", BlockIdDefault++).getInt();
-			CompressedMossyCobblestoneBlockID = cfg.getBlock("Compressed Mossy Cobblestone BlockID", BlockIdDefault++).getInt();
-			CompressedStoneBrickBlockID = cfg.getBlock("Compressed Stone Brick BlockID", BlockIdDefault++).getInt();
-			CompressedClayBlockID = cfg.getBlock("Compressed Clay BlockID", BlockIdDefault++).getInt();
-			CompressedMossyStoneBrickBlockID = cfg.getBlock("Compressed Mossy Stone Brick BlockID", BlockIdDefault++).getInt();
-			CompressedCrackedStoneBrickBlockID = cfg.getBlock("Compressed Cracked Stone Brick BlockID", BlockIdDefault++).getInt();
-			CompressedCompressedStoneBlockID = cfg.getBlock("Compressed Compressed Stone BlockID", BlockIdDefault++).getInt();
-
-			CompressedRedstoneBlockID = cfg.getBlock("Compressed RedStone BlockID", BlockIdDefault++).getInt();
-			CompressedNetherQuartzBlockID = cfg.getBlock("Compressed Nether Quartz BlockID", BlockIdDefault++).getInt();
-			CompressedChiseledNetherQuartzBlockID = cfg.getBlock("Compressed Chiseled Nether Quartz BlockID", BlockIdDefault++).getInt();
-			CompressedPillarNetherQuartzBlockID = cfg.getBlock("Compressed Piller Nether Quartz BlockID", BlockIdDefault++).getInt();
-
-		} catch (Exception e) {
-			FMLLog.log(Level.SEVERE, e, Reference.MOD_NAME + " loadding configuration failure");
-		} finally {
-			cfg.save();
-		}
+		config = new Config();
+		config.loadConfig(cfg);
 
 	}
 
+	/**
+	 * TODO ID/名前とか含めて配列に持っておいて、initではforくるくるするだけにしたい
+	 */
+
 	// load()なもの
-	@Mod.Init
+	@Mod.EventHandler
 	public void myInitMethod(FMLInitializationEvent event) {
+		if(config.isEnabled == false){
+			return;
+		}
 
-		if (CompressedStoneBlockID > 1) {
-			this.addCompressedBlock(CompressedStoneBlockID, Block.stone, "Stone", "石ブロック");
 
-			if (CompressedCompressedStoneBlockID > 1) {
+		if (config.CompressedStoneBlockID > 1) {
+			this.addCompressedBlock(config.CompressedStoneBlockID, Block.stone, "Stone", "石ブロック");
+
+			if (config.CompressedCompressedStoneBlockID > 1) {
 				// この順の場合blockCompressedBlock[0]は必ず圧縮石ブロック
-				this.addCompressedBlock(CompressedCompressedStoneBlockID, blockCompressedBlock[0], "Compressed Stone", "圧縮石ブロック", 15);
+				this.addCompressedBlock(config.CompressedCompressedStoneBlockID, blockCompressedBlock[0], "Compressed Stone", "圧縮石ブロック", 15);
 			}
 		}
 
-		if (CompressedDirtBlockID > 1) {
-			this.addCompressedBlock(CompressedDirtBlockID, Block.dirt, "Dirt", "土ブロック");
+		if (config.CompressedDirtBlockID > 1) {
+			this.addCompressedBlock(config.CompressedDirtBlockID, Block.dirt, "Dirt", "土ブロック");
 		}
-		if (CompressedCobblestoneBlockID > 1) {
-			this.addCompressedBlock(CompressedCobblestoneBlockID, Block.cobblestone, "Cobblestone", "丸石");
+		if (config.CompressedCobblestoneBlockID > 1) {
+			this.addCompressedBlock(config.CompressedCobblestoneBlockID, Block.cobblestone, "Cobblestone", "丸石");
 		}
-		if (CompressedIronBlockID > 1) {
-			this.addCompressedBlock(CompressedIronBlockID, Block.blockSteel, "Iron Brock", "鉄ブロック");
+		if (config.CompressedIronBlockID > 1) {
+			this.addCompressedBlock(config.CompressedIronBlockID, Block.blockIron, "Iron Brock", "鉄ブロック");
 		}
-		if (CompressedGoldBlockID > 1) {
-			this.addCompressedBlock(CompressedGoldBlockID, Block.blockGold, "Gold Brock", "金ブロック");
+		if (config.CompressedGoldBlockID > 1) {
+			this.addCompressedBlock(config.CompressedGoldBlockID, Block.blockGold, "Gold Brock", "金ブロック");
 		}
-		if (CompressedLapisBlockID > 1) {
-			this.addCompressedBlock(CompressedLapisBlockID, Block.blockLapis, "Lapis Brock", "ラピスブロック");
+		if (config.CompressedLapisBlockID > 1) {
+			this.addCompressedBlock(config.CompressedLapisBlockID, Block.blockLapis, "Lapis Brock", "ラピスブロック");
 		}
-		if (CompressedDiamondBlockID > 1) {
-			this.addCompressedBlock(CompressedDiamondBlockID, Block.blockDiamond, "Diamond Brock", "ダイヤモンドブロック");
+		if (config.CompressedDiamondBlockID > 1) {
+			this.addCompressedBlock(config.CompressedDiamondBlockID, Block.blockDiamond, "Diamond Brock", "ダイヤモンドブロック");
 		}
-		if (CompressedEmeraldBlockID > 1) {
-			this.addCompressedBlock(CompressedEmeraldBlockID, Block.blockEmerald, "Emerald Brock", "エメラルドブロック");
+		if (config.CompressedEmeraldBlockID > 1) {
+			this.addCompressedBlock(config.CompressedEmeraldBlockID, Block.blockEmerald, "Emerald Brock", "エメラルドブロック");
 		}
-		if (CompressedSandBlockID > 1) {
-			this.addCompressedBlock(CompressedSandBlockID, Block.sand, "Sand", "砂");
+		if (config.CompressedSandBlockID > 1) {
+			this.addCompressedBlock(config.CompressedSandBlockID, Block.sand, "Sand", "砂");
 		}
-		if (CompressedGravelBlockID > 1) {
-			this.addCompressedBlock(CompressedGravelBlockID, Block.gravel, "Gravel", "砂利");
+		if (config.CompressedGravelBlockID > 1) {
+			this.addCompressedBlock(config.CompressedGravelBlockID, Block.gravel, "Gravel", "砂利");
 		}
-		if (CompressedSandStoneBlockID > 1) {
-			this.addCompressedBlock(CompressedSandStoneBlockID, Block.sandStone, "SandStone", "砂岩");
+		if (config.CompressedSandStoneBlockID > 1) {
+			this.addCompressedBlock(config.CompressedSandStoneBlockID, Block.sandStone, "SandStone", "砂岩");
 		}
-		if (CompressedObsidanBlockID > 1) {
-			this.addCompressedBlock(CompressedObsidanBlockID, Block.obsidian, "Obsidian", "黒曜石");
+		if (config.CompressedObsidanBlockID > 1) {
+			this.addCompressedBlock(config.CompressedObsidanBlockID, Block.obsidian, "Obsidian", "黒曜石");
 		}
-		if (CompressedSnowBlockID > 1) {
-			this.addCompressedBlock(CompressedSnowBlockID, Block.blockSnow, "Snow", "雪");
+		if (config.CompressedSnowBlockID > 1) {
+			this.addCompressedBlock(config.CompressedSnowBlockID, Block.blockSnow, "Snow", "雪");
 		}
-		if (CompressedSoulsandBlockID > 1) {
-			this.addCompressedBlock(CompressedSoulsandBlockID, Block.slowSand, "Soulsand", "ソウルサンド");
+		if (config.CompressedSoulsandBlockID > 1) {
+			this.addCompressedBlock(config.CompressedSoulsandBlockID, Block.slowSand, "Soulsand", "ソウルサンド");
 		}
-		if (CompressedGlowStoneBlockID > 1) {
-			this.addCompressedBlock(CompressedGlowStoneBlockID, Block.glowStone, "GlowStone", "グロウストーン", 0, true);
+		if (config.CompressedGlowStoneBlockID > 1) {
+			this.addCompressedBlock(config.CompressedGlowStoneBlockID, Block.glowStone, "GlowStone", "グロウストーン", 0, true);
 		}
-		if (CompressedEndStoneBlockID > 1) {
-			this.addCompressedBlock(CompressedEndStoneBlockID, Block.whiteStone, "EndStone", "エンドストーン");
+		if (config.CompressedEndStoneBlockID > 1) {
+			this.addCompressedBlock(config.CompressedEndStoneBlockID, Block.whiteStone, "EndStone", "エンドストーン");
 		}
-		if (CompressedNetherrackBlockID > 1) {
-			this.addCompressedBlock(CompressedNetherrackBlockID, Block.netherrack, "NetherRack", "ネザーラック");
-		}
-
-		if (CompressedWhiteWoolBlockID > 1) {
-			this.addCompressedBlock(CompressedWhiteWoolBlockID, Block.cloth, "White Wool", "白羊毛", 0);
-		}
-		if (CompressedOrangeWoolBlockID > 1) {
-			this.addCompressedBlock(CompressedOrangeWoolBlockID, Block.cloth, "Orange Wool", "橙色羊毛", 1);
-		}
-		if (CompressedMagentaWoolBlockID > 1) {
-			this.addCompressedBlock(CompressedMagentaWoolBlockID, Block.cloth, "Magenta Wool", "赤紫色羊毛", 2);
-		}
-		if (CompressedLightBlueWoolBlockID > 1) {
-			this.addCompressedBlock(CompressedLightBlueWoolBlockID, Block.cloth, "Light Blue Wool", "空色羊毛", 3);
-		}
-		if (CompressedYellowWoolBlockID > 1) {
-			this.addCompressedBlock(CompressedYellowWoolBlockID, Block.cloth, "Yellow Wool", "黄羊毛", 4);
-		}
-		if (CompressedLightGreenWoolBlockID > 1) {
-			this.addCompressedBlock(CompressedLightGreenWoolBlockID, Block.cloth, "Light Green Wool", "黄緑羊毛", 5);
-		}
-		if (CompressedPinkWoolBlockID > 1) {
-			this.addCompressedBlock(CompressedPinkWoolBlockID, Block.cloth, "Pink Wool", "桃色羊毛", 6);
-		}
-		if (CompressedGrayWoolBlockID > 1) {
-			this.addCompressedBlock(CompressedGrayWoolBlockID, Block.cloth, "Gray Wool", "灰色羊毛", 7);
-		}
-		if (CompressedLightGrayWoolBlockID > 1) {
-			this.addCompressedBlock(CompressedLightGrayWoolBlockID, Block.cloth, "Light Gray Wool", "薄灰色羊毛", 8);
-		}
-		if (CompressedCyanWoolBlockID > 1) {
-			this.addCompressedBlock(CompressedCyanWoolBlockID, Block.cloth, "Cyan Wool", "水色羊毛", 9);
-		}
-		if (CompressedPurpleWoolBlockID > 1) {
-			this.addCompressedBlock(CompressedPurpleWoolBlockID, Block.cloth, "Purple Wool", "紫羊毛", 10);
-		}
-		if (CompressedBlueWoolBlockID > 1) {
-			this.addCompressedBlock(CompressedBlueWoolBlockID, Block.cloth, "Blue Wool", "青羊毛", 11);
-		}
-		if (CompressedBrownWoolBlockID > 1) {
-			this.addCompressedBlock(CompressedBrownWoolBlockID, Block.cloth, "Brown Wool", "茶羊毛", 12);
-		}
-		if (CompressedGreenWoolBlockID > 1) {
-			this.addCompressedBlock(CompressedGreenWoolBlockID, Block.cloth, "Green Wool", "緑羊毛", 13);
-		}
-		if (CompressedRedWoolBlockID > 1) {
-			this.addCompressedBlock(CompressedRedWoolBlockID, Block.cloth, "Red Wool", "赤羊毛", 14);
-		}
-		if (CompressedBlackWoolBlockID > 1) {
-			this.addCompressedBlock(CompressedBlackWoolBlockID, Block.cloth, "Black Wool", "黒羊毛", 15);
+		if (config.CompressedNetherrackBlockID > 1) {
+			this.addCompressedBlock(config.CompressedNetherrackBlockID, Block.netherrack, "NetherRack", "ネザーラック");
 		}
 
-		if (CompressedOakWoodBlockID > 1) {
-			this.addCompressedBlock(CompressedOakWoodBlockID, Block.wood, "Oak Wood", "オーク原木", 0);
+		if (config.CompressedWhiteWoolBlockID > 1) {
+			this.addCompressedBlock(config.CompressedWhiteWoolBlockID, Block.cloth, "White Wool", "白羊毛", 0);
 		}
-		if (CompressedSpurceWoodBlockID > 1) {
-			this.addCompressedBlock(CompressedSpurceWoodBlockID, Block.wood, "Spurce Wood", "松原木", 1);
+		if (config.CompressedOrangeWoolBlockID > 1) {
+			this.addCompressedBlock(config.CompressedOrangeWoolBlockID, Block.cloth, "Orange Wool", "橙色羊毛", 1);
 		}
-		if (CompressedBirchWoodBlockID > 1) {
-			this.addCompressedBlock(CompressedBirchWoodBlockID, Block.wood, "Birch Wood", "白樺原木", 2);
+		if (config.CompressedMagentaWoolBlockID > 1) {
+			this.addCompressedBlock(config.CompressedMagentaWoolBlockID, Block.cloth, "Magenta Wool", "赤紫色羊毛", 2);
 		}
-		if (CompressedJungleWoodBlockID > 1) {
-			this.addCompressedBlock(CompressedJungleWoodBlockID, Block.wood, "Jungle Wood", "ジャングル原木", 3);
+		if (config.CompressedLightBlueWoolBlockID > 1) {
+			this.addCompressedBlock(config.CompressedLightBlueWoolBlockID, Block.cloth, "Light Blue Wool", "空色羊毛", 3);
 		}
-		if (CompressedOakPlanksBlockID > 1) {
-			this.addCompressedBlock(CompressedOakPlanksBlockID, Block.planks, "Oak Wood Planks", "オーク木材", 0);
+		if (config.CompressedYellowWoolBlockID > 1) {
+			this.addCompressedBlock(config.CompressedYellowWoolBlockID, Block.cloth, "Yellow Wool", "黄羊毛", 4);
 		}
-		if (CompressedSpurcePlanksBlockID > 1) {
-			this.addCompressedBlock(CompressedSpurcePlanksBlockID, Block.planks, "Spurce Wood Planks", "松木材", 1);
+		if (config.CompressedLightGreenWoolBlockID > 1) {
+			this.addCompressedBlock(config.CompressedLightGreenWoolBlockID, Block.cloth, "Light Green Wool", "黄緑羊毛", 5);
 		}
-		if (CompressedBirchPlanksBlockID > 1) {
-			this.addCompressedBlock(CompressedBirchPlanksBlockID, Block.planks, "Birch Wood Planks", "白樺木材", 2);
+		if (config.CompressedPinkWoolBlockID > 1) {
+			this.addCompressedBlock(config.CompressedPinkWoolBlockID, Block.cloth, "Pink Wool", "桃色羊毛", 6);
 		}
-		if (CompressedJunglePlanksBlockID > 1) {
-			this.addCompressedBlock(CompressedJunglePlanksBlockID, Block.planks, "Jungle Wood Planks", "ジャングル木材", 3);
+		if (config.CompressedGrayWoolBlockID > 1) {
+			this.addCompressedBlock(config.CompressedGrayWoolBlockID, Block.cloth, "Gray Wool", "灰色羊毛", 7);
+		}
+		if (config.CompressedLightGrayWoolBlockID > 1) {
+			this.addCompressedBlock(config.CompressedLightGrayWoolBlockID, Block.cloth, "Light Gray Wool", "薄灰色羊毛", 8);
+		}
+		if (config.CompressedCyanWoolBlockID > 1) {
+			this.addCompressedBlock(config.CompressedCyanWoolBlockID, Block.cloth, "Cyan Wool", "水色羊毛", 9);
+		}
+		if (config.CompressedPurpleWoolBlockID > 1) {
+			this.addCompressedBlock(config.CompressedPurpleWoolBlockID, Block.cloth, "Purple Wool", "紫羊毛", 10);
+		}
+		if (config.CompressedBlueWoolBlockID > 1) {
+			this.addCompressedBlock(config.CompressedBlueWoolBlockID, Block.cloth, "Blue Wool", "青羊毛", 11);
+		}
+		if (config.CompressedBrownWoolBlockID > 1) {
+			this.addCompressedBlock(config.CompressedBrownWoolBlockID, Block.cloth, "Brown Wool", "茶羊毛", 12);
+		}
+		if (config.CompressedGreenWoolBlockID > 1) {
+			this.addCompressedBlock(config.CompressedGreenWoolBlockID, Block.cloth, "Green Wool", "緑羊毛", 13);
+		}
+		if (config.CompressedRedWoolBlockID > 1) {
+			this.addCompressedBlock(config.CompressedRedWoolBlockID, Block.cloth, "Red Wool", "赤羊毛", 14);
+		}
+		if (config.CompressedBlackWoolBlockID > 1) {
+			this.addCompressedBlock(config.CompressedBlackWoolBlockID, Block.cloth, "Black Wool", "黒羊毛", 15);
 		}
 
-		if (CompressedBrickBlockID > 1) {
-			this.addCompressedBlock(CompressedBrickBlockID, Block.brick, "Brick", "レンガブロック");
+		if (config.CompressedOakWoodBlockID > 1) {
+			this.addCompressedBlock(config.CompressedOakWoodBlockID, Block.wood, "Oak Wood", "オーク原木", 0);
 		}
-		if (CompressedBookshelfBlockID > 1) {
-			this.addCompressedBlock(CompressedBookshelfBlockID, Block.bookShelf, "Bookshelf", "本棚");
+		if (config.CompressedSpurceWoodBlockID > 1) {
+			this.addCompressedBlock(config.CompressedSpurceWoodBlockID, Block.wood, "Spurce Wood", "松原木", 1);
 		}
-		if (CompressedMossyCobblestoneBlockID > 1) {
-			this.addCompressedBlock(CompressedMossyCobblestoneBlockID, Block.cobblestoneMossy, "Mossy Cobblestone", "苔石");
+		if (config.CompressedBirchWoodBlockID > 1) {
+			this.addCompressedBlock(config.CompressedBirchWoodBlockID, Block.wood, "Birch Wood", "白樺原木", 2);
 		}
-		if (CompressedClayBlockID > 1) {
-			this.addCompressedBlock(CompressedClayBlockID, Block.blockClay, "ClayBlock", "粘土");
+		if (config.CompressedJungleWoodBlockID > 1) {
+			this.addCompressedBlock(config.CompressedJungleWoodBlockID, Block.wood, "Jungle Wood", "ジャングル原木", 3);
 		}
-		if (CompressedStoneBrickBlockID > 1) {
-			this.addCompressedBlock(CompressedStoneBrickBlockID, Block.stoneBrick, "Stone Brick", "石レンガブロック", 0);
+		if (config.CompressedOakPlanksBlockID > 1) {
+			this.addCompressedBlock(config.CompressedOakPlanksBlockID, Block.planks, "Oak Wood Planks", "オーク木材", 0);
 		}
-		if (CompressedMossyStoneBrickBlockID > 1) {
-			this.addCompressedBlock(CompressedMossyStoneBrickBlockID, Block.stoneBrick, "Mossy Stone Brick", "苔石レンガブロック", 1);
+		if (config.CompressedSpurcePlanksBlockID > 1) {
+			this.addCompressedBlock(config.CompressedSpurcePlanksBlockID, Block.planks, "Spurce Wood Planks", "松木材", 1);
 		}
-		if (CompressedCrackedStoneBrickBlockID > 1) {
-			this.addCompressedBlock(CompressedCrackedStoneBrickBlockID, Block.stoneBrick, "Cracked Stone Brick", "ひび割れた石レンガブロック", 2);
+		if (config.CompressedBirchPlanksBlockID > 1) {
+			this.addCompressedBlock(config.CompressedBirchPlanksBlockID, Block.planks, "Birch Wood Planks", "白樺木材", 2);
+		}
+		if (config.CompressedJunglePlanksBlockID > 1) {
+			this.addCompressedBlock(config.CompressedJunglePlanksBlockID, Block.planks, "Jungle Wood Planks", "ジャングル木材", 3);
 		}
 
-		if (CompressedRedstoneBlockID > 1) {
-			this.addCompressedBlock(CompressedRedstoneBlockID, Block.blockRedstone, "Redstone", "レッドストーンブロック");
+		if (config.CompressedBrickBlockID > 1) {
+			this.addCompressedBlock(config.CompressedBrickBlockID, Block.brick, "Brick", "レンガブロック");
 		}
-		if (CompressedNetherQuartzBlockID > 1) {
-			this.addCompressedBlock(CompressedNetherQuartzBlockID, Block.blockNetherQuartz, "Nether Quartz", "ネザー水晶ブロック", 0);
+		if (config.CompressedBookshelfBlockID > 1) {
+			this.addCompressedBlock(config.CompressedBookshelfBlockID, Block.bookShelf, "Bookshelf", "本棚");
 		}
-		if (CompressedChiseledNetherQuartzBlockID > 1) {
-			this.addCompressedBlock(CompressedChiseledNetherQuartzBlockID, Block.blockNetherQuartz, "Chiseled Nether Quartz", "模様入りネザー水晶ブロック", 1);
+		if (config.CompressedMossyCobblestoneBlockID > 1) {
+			this.addCompressedBlock(config.CompressedMossyCobblestoneBlockID, Block.cobblestoneMossy, "Mossy Cobblestone", "苔石");
 		}
-		if (CompressedPillarNetherQuartzBlockID > 1) {
-			this.addCompressedBlock(CompressedPillarNetherQuartzBlockID, Block.blockNetherQuartz, "Pillar Nether Quartz", "柱状ネザー水晶ブロック", 2);
+		if (config.CompressedClayBlockID > 1) {
+			this.addCompressedBlock(config.CompressedClayBlockID, Block.blockClay, "ClayBlock", "粘土");
+		}
+		if (config.CompressedStoneBrickBlockID > 1) {
+			this.addCompressedBlock(config.CompressedStoneBrickBlockID, Block.stoneBrick, "Stone Brick", "石レンガブロック", 0);
+		}
+		if (config.CompressedMossyStoneBrickBlockID > 1) {
+			this.addCompressedBlock(config.CompressedMossyStoneBrickBlockID, Block.stoneBrick, "Mossy Stone Brick", "苔石レンガブロック", 1);
+		}
+		if (config.CompressedCrackedStoneBrickBlockID > 1) {
+			this.addCompressedBlock(config.CompressedCrackedStoneBrickBlockID, Block.stoneBrick, "Cracked Stone Brick", "ひび割れた石レンガブロック", 2);
+		}
+
+		if (config.CompressedRedstoneBlockID > 1) {
+			this.addCompressedBlock(config.CompressedRedstoneBlockID, Block.blockRedstone, "Redstone", "レッドストーンブロック");
+		}
+		if (config.CompressedNetherQuartzBlockID > 1) {
+			this.addCompressedBlock(config.CompressedNetherQuartzBlockID, Block.blockNetherQuartz, "Nether Quartz", "ネザー水晶ブロック", 0);
+		}
+		if (config.CompressedChiseledNetherQuartzBlockID > 1) {
+			this.addCompressedBlock(config.CompressedChiseledNetherQuartzBlockID, Block.blockNetherQuartz, "Chiseled Nether Quartz", "模様入りネザー水晶ブロック", 1);
+		}
+		if (config.CompressedPillarNetherQuartzBlockID > 1) {
+			this.addCompressedBlock(config.CompressedPillarNetherQuartzBlockID, Block.blockNetherQuartz, "Pillar Nether Quartz", "柱状ネザー水晶ブロック", 2);
+		}
+
+		if (config.CompressedWhiteStainedClayBlockID > 1) {
+			this.addCompressedBlock(config.CompressedWhiteStainedClayBlockID, Block.field_111039_cA, "White StainedClay", "白の色付き粘土", 0);
+		}
+		if (config.CompressedOrangeStainedClayBlockID > 1) {
+			this.addCompressedBlock(config.CompressedOrangeStainedClayBlockID, Block.field_111039_cA, "Orange StainedClay", "橙色の色付き粘土", 1);
+		}
+		if (config.CompressedMagentaStainedClayBlockID > 1) {
+			this.addCompressedBlock(config.CompressedMagentaStainedClayBlockID, Block.field_111039_cA, "Magenta StainedClay", "赤紫色の色付き粘土", 2);
+		}
+		if (config.CompressedLightBlueStainedClayBlockID > 1) {
+			this.addCompressedBlock(config.CompressedLightBlueStainedClayBlockID, Block.field_111039_cA, "Light Blue StainedClay", "空色の色付き粘土", 3);
+		}
+		if (config.CompressedYellowStainedClayBlockID > 1) {
+			this.addCompressedBlock(config.CompressedYellowStainedClayBlockID, Block.field_111039_cA, "Yellow StainedClay", "黄の色付き粘土", 4);
+		}
+		if (config.CompressedLightGreenStainedClayBlockID > 1) {
+			this.addCompressedBlock(config.CompressedLightGreenStainedClayBlockID, Block.field_111039_cA, "Light Green StainedClay", "黄緑の色付き粘土", 5);
+		}
+		if (config.CompressedPinkStainedClayBlockID > 1) {
+			this.addCompressedBlock(config.CompressedPinkStainedClayBlockID, Block.field_111039_cA, "Pink StainedClay", "桃色の色付き粘土", 6);
+		}
+		if (config.CompressedGrayStainedClayBlockID > 1) {
+			this.addCompressedBlock(config.CompressedGrayStainedClayBlockID, Block.field_111039_cA, "Gray StainedClay", "灰色の色付き粘土", 7);
+		}
+		if (config.CompressedLightGrayStainedClayBlockID > 1) {
+			this.addCompressedBlock(config.CompressedLightGrayStainedClayBlockID, Block.field_111039_cA, "Light Gray StainedClay", "薄灰色の色付き粘土", 8);
+		}
+		if (config.CompressedCyanStainedClayBlockID > 1) {
+			this.addCompressedBlock(config.CompressedCyanStainedClayBlockID, Block.field_111039_cA, "Cyan StainedClay", "水色の色付き粘土", 9);
+		}
+		if (config.CompressedPurpleStainedClayBlockID > 1) {
+			this.addCompressedBlock(config.CompressedPurpleStainedClayBlockID, Block.field_111039_cA, "Purple StainedClay", "紫の色付き粘土", 10);
+		}
+		if (config.CompressedBlueStainedClayBlockID > 1) {
+			this.addCompressedBlock(config.CompressedBlueStainedClayBlockID, Block.field_111039_cA, "Blue StainedClay", "青の色付き粘土", 11);
+		}
+		if (config.CompressedBrownStainedClayBlockID > 1) {
+			this.addCompressedBlock(config.CompressedBrownStainedClayBlockID, Block.field_111039_cA, "Brown StainedClay", "茶の色付き粘土", 12);
+		}
+		if (config.CompressedGreenStainedClayBlockID > 1) {
+			this.addCompressedBlock(config.CompressedGreenStainedClayBlockID, Block.field_111039_cA, "Green StainedClay", "緑の色付き粘土", 13);
+		}
+		if (config.CompressedRedStainedClayBlockID > 1) {
+			this.addCompressedBlock(config.CompressedRedStainedClayBlockID, Block.field_111039_cA, "Red StainedClay", "赤の色付き粘土", 14);
+		}
+		if (config.CompressedBlackStainedClayBlockID > 1) {
+			this.addCompressedBlock(config.CompressedBlackStainedClayBlockID, Block.field_111039_cA, "Black StainedClay", "黒の色付き粘土", 15);
+		}
+		if (config.CompressedHardenedClayBlockID > 1) {
+			this.addCompressedBlock(config.CompressedHardenedClayBlockID, Block.field_111032_cD, "Hardened Clay", "堅焼き粘土");
+		}
+		if (config.CompressedCoalBlockBlockID > 1) {
+			this.addCompressedBlock(config.CompressedCoalBlockBlockID, Block.field_111034_cE, "Block of Coal", "石炭ブロック");
 		}
 
 	}
